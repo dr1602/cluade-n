@@ -8,6 +8,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Before writing any code, **always check the `/docs` directory first** for relevant documentation. If a `/docs` file covers the feature, pattern, or API you are about to implement, read it and follow it. Do not rely on training data or assumptions when project-specific docs exist.
 
+Documentation files that ALWAYS MUST be followed:
+
+- /docs/ui.md
+- /docs/data-fetching.md
+
 ## Commands
 
 ```bash
@@ -47,7 +52,11 @@ For slow client-side navigations: Suspense alone is not enough — you must also
 Route params (`params`, `searchParams`) are now **Promises** and must be awaited:
 
 ```tsx
-export default async function Page({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
 }
 ```
