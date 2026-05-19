@@ -12,3 +12,13 @@ export async function getWorkoutsForDate(date: string) {
     .from(workouts)
     .where(and(eq(workouts.userId, session.user.id), eq(workouts.date, date)))
 }
+
+export async function createWorkout(name: string | null, date: string, notes: string | null) {
+  const session = await auth()
+  if (!session?.user?.id) throw new Error('Unauthenticated')
+
+  return db
+    .insert(workouts)
+    .values({ userId: session.user.id, name, date, notes })
+    .returning()
+}

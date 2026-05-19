@@ -1,48 +1,42 @@
-import { format, parseISO } from 'date-fns'
+import { format } from 'date-fns'
+import Link from 'next/link'
 import { getWorkoutsForDate } from '@/data/workouts'
-import { WorkoutDatePicker } from '@/components/dashboard/WorkoutDatePicker'
+import { WorkoutDatePicker } from './WorkoutDatePicker'
+import { Button } from '@/components/ui/button'
 
 export default async function DashboardPage({
   searchParams,
 }: {
   searchParams: Promise<{ date?: string }>
 }) {
-  const { date: dateParam } = await searchParams
-  const dateStr = dateParam ?? format(new Date(), 'yyyy-MM-dd')
-  const selectedDate = parseISO(dateStr)
-  const workouts = await getWorkoutsForDate(dateStr)
+  const { date } = await searchParams
+  const today = format(new Date(), 'yyyy-MM-dd')
+  const selectedDate = date ?? today
+  const selectedDateObj = new Date(`${selectedDate}T00:00:00`)
+
+  const workouts = await getWorkoutsForDate(selectedDate)
 
   return (
-    <div className="max-w-2xl mx-auto p-8 space-y-8">
-      <h1 className="text-2xl font-bold">Workout Dashboard</h1>
-
-      <WorkoutDatePicker selected={selectedDate} />
-
-      <div className="space-y-4">
-        <h2 className="text-lg font-semibold">
-          Workouts for {format(selectedDate, 'yyyy MMM dd')}
-        </h2>
-
-        {workouts.length === 0 ? (
-          <p className="text-muted-foreground">No workouts logged for this date.</p>
-        ) : (
-          <ul className="space-y-3">
-            {workouts.map((workout) => (
-              <li
-                key={workout.id}
-                className="border rounded-lg p-4 flex items-center justify-between"
-              >
-                <div>
-                  <p className="font-medium">{workout.name ?? 'Untitled workout'}</p>
-                  {workout.notes && (
-                    <p className="text-sm text-muted-foreground">{workout.notes}</p>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
+    <div className="max-w-2xl mx-auto p-8 space-y-6">
+      <div className="flex items-center justify-between">
+        <WorkoutDatePicker selected={selectedDateObj} />
+        <Button asChild>
+          <Link href="/dashboard/workout/new">New workout</Link>
+        </Button>
       </div>
+
+      {workouts.length === 0 ? (
+        <p className="text-muted-foreground text-sm">No workouts for this day.</p>
+      ) : (
+        <ul className="space-y-3">
+          {workouts.map((w) => (
+            <li key={w.id} className="border rounded-lg p-4 space-y-1">
+              <p className="font-medium">{w.name ?? 'Untitled workout'}</p>
+              {w.notes && <p className="text-sm text-muted-foreground">{w.notes}</p>}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }
