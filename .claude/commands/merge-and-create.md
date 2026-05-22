@@ -1,0 +1,1 @@
+commit any changes in the current branch and provide a suitable message based on the code changes adding at the beggining of the commit message a feat, chore, test, fix stamp correspondingly, then merge the current branch into the $1 branch and resolve any issues off that merge. then create a new branch called $2
