@@ -27,6 +27,17 @@ npm run lint     # ESLint
 
 No test runner is configured.
 
+## IMPORTANT: Always validate before finishing
+
+Before considering any implementation complete, **always run and address the output of**:
+
+```bash
+npm run lint
+npm run build
+```
+
+Both must pass with no errors. Fix any lint errors or type/build errors before declaring the task done.
+
 ## Stack
 
 - **Next.js 16.2.6** with App Router — see `node_modules/next/dist/docs/` for authoritative API docs
