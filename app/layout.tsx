@@ -9,6 +9,8 @@ import {
 import { Geist, Geist_Mono, Inter } from 'next/font/google';
 import './globals.css';
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -39,12 +41,13 @@ export default function RootLayout({
       <body className='min-h-full flex flex-col'>
         <ClerkProvider>
           <header className='flex justify-end items-center p-4 gap-4 h-16'>
+            <ThemeToggle />
             <Show when='signed-out'>
-              <SignInButton mode="modal" />
+              <SignInButton mode="modal">
+                <Button variant="outline">Sign In</Button>
+              </SignInButton>
               <SignUpButton mode="modal">
-                <button className='bg-purple-700 text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer'>
-                  Sign Up
-                </button>
+                <Button>Sign Up</Button>
               </SignUpButton>
             </Show>
             <Show when='signed-in'>
