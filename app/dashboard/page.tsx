@@ -30,9 +30,15 @@ export default async function DashboardPage({
       ) : (
         <ul className="space-y-3">
           {workouts.map((w) => (
-            <li key={w.id} className="border rounded-lg p-4 space-y-1">
-              <p className="font-medium">{w.name ?? 'Untitled workout'}</p>
-              {w.notes && <p className="text-sm text-muted-foreground">{w.notes}</p>}
+            <li key={w.id}>
+              <Link
+                href={`/dashboard/workout/${w.id}`}
+                className="block border rounded-lg p-4 space-y-1 hover:bg-accent transition-colors"
+              >
+                <p className="font-medium">{w.name ?? 'Untitled workout'}</p>
+                {w.notes && <p className="text-sm text-muted-foreground">{w.notes}</p>}
+                {w.date && <p className="text-sm text-muted-foreground">{w.date}</p>}
+              </Link>
             </li>
           ))}
         </ul>
