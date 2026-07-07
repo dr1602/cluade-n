@@ -43,10 +43,10 @@ export default function RootLayout({
           <header className='flex justify-end items-center p-4 gap-4 h-16'>
             <ThemeToggle />
             <Show when='signed-out'>
-              <SignInButton mode="modal">
+              <SignInButton mode="redirect">
                 <Button variant="outline">Sign In</Button>
               </SignInButton>
-              <SignUpButton mode="modal">
+              <SignUpButton mode="redirect">
                 <Button>Sign Up</Button>
               </SignUpButton>
             </Show>
